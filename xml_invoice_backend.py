@@ -1,4 +1,5 @@
 # backend.py
+from pathlib import Path
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
@@ -445,7 +446,9 @@ def crea_fattura_elettronica(dati_access, params):
     
     # Convert the ElementTree to string with encoding specified
     xml_bytes = ET.tostring(root, encoding="utf-8")
-    with open("data/output.xml", "wb") as f:
+    gen_tmp_file = Path("data/output.xml")
+    gen_tmp_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(gen_tmp_file, "wb") as f:
         f.write(xml_bytes)
 
     # Parse with minidom for pretty printing, maintaining correct namespace handling
